@@ -1,0 +1,15 @@
+# Add some local task links to facilitate navigation.
+
+config_entity_example.add_action:
+  route_name: rating_formula.add
+  title: 'Add formula'
+  appears_on:
+    - rating_formula.list
+
+config_entity_example.list_action:
+  route_name: rating_formula.list
+  title: 'List rating formula'
+  appears_on:
+    - rating_formula.add
+    - rating_formula.edit
+    - rating_formula.delete

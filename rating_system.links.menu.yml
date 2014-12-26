@@ -1,0 +1,3 @@
+rating_system.menu:
+  title: Rating system
+  route_name: rating_formula.list

@@ -1,0 +1,6 @@
+name: 'Rating system'
+description: 'Provides rating formulas for content entities'
+type: module
+package: 'Rating system'
+core: 8.x
+version: '8.x-1.x-dev'
