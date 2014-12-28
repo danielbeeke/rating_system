@@ -1,8 +1,17 @@
 # The routing.yml file defines the paths for our module.
 # Here we define the paths for our entity type's admin UI.
 
+rating_system.rating_system:
+  path: '/admin/structure/rating-system'
+  defaults:
+    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
+    _title: 'Rating system'
+  requirements:
+    _permission: 'access administration pages'
+
+
 # This is the router item for listing all entities.
-rating_formula.list:
+rating_system.rating_formula_list:
   path: '/admin/structure/rating-system/formulas'
   defaults:
     # '_entity_list' tells Drupal to use an entity list controller.
@@ -10,12 +19,12 @@ rating_formula.list:
     # and looks for the "list" entry under "controllers" for the class to load.
     # @see \Drupal\Core\Entity\Enhancer\EntityRouteEnhancer
     _entity_list: 'rating_formula'
-    _title: 'Rating system formulas'
+    _title: 'Rating formulas'
   requirements:
     _permission: 'administer rating system'
 
 # This is the router item for adding our entity.
-rating_formula.add:
+rating_system.rating_formula_add:
   path: '/admin/structure/rating-system/formulas/add'
   defaults:
     _title: 'Add rating formula'
@@ -29,7 +38,7 @@ rating_formula.add:
     _entity_create_access: rating_formula
 
 # This is the router item for editing our entity.
-rating_formula.edit:
+rating_system.rating_formula_edit:
   # Parameters may be passed to the form via the URL path. We name the
   # parameter in the path by enclosing it in curly braces. For entity forms,
   # we include the entity ID in the path by including a parameter with the
@@ -47,7 +56,7 @@ rating_formula.edit:
     _entity_access: rating_formula.update
 
 # This is the router item for deleting an instance of our entity.
-rating_formula.delete:
+rating_system.rating_formula_delete:
   path: '/admin/structure/rating-system/formulas/manage/{rating_formula}/delete'
   defaults:
     _title: 'Delete rating formula'

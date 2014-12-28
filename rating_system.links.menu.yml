@@ -1,3 +1,11 @@
-rating_system.menu:
+rating_system.rating_system:
   title: Rating system
-  route_name: rating_formula.list
+  route_name: rating_system.rating_system
+  parent: system.admin_structure
+  description: 'Administer rating formulas.'
+
+rating_system.rating_formula_list:
+  title: Rating formula's
+  route_name: rating_system.rating_formula_list
+  parent: rating_system.rating_system
+  description: 'Administer rating formulas.'

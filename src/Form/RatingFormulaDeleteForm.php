@@ -66,7 +66,7 @@ class RatingFormulaDeleteForm extends EntityConfirmFormBase {
    *   The URL to go to if the user cancels the deletion.
    */
   public function getCancelUrl() {
-    return new Url('rating_formula.list');
+    return new Url('rating_system.rating_formula_list');
   }
 
   /**
@@ -85,7 +85,7 @@ class RatingFormulaDeleteForm extends EntityConfirmFormBase {
     $this->entity->delete();
 
     // Set a message that the entity was deleted.
-    drupal_set_message(t('Robot %label was deleted.', array(
+    drupal_set_message(t('Rating formula %label was deleted.', array(
       '%label' => $this->entity->label(),
     )));
 

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\rating_system\RobotAccessController.
+ * Contains \Drupal\rating_system\RatingFormulaAccessController.
  */
 
 namespace Drupal\rating_system;
@@ -14,9 +14,9 @@ use Drupal\Core\Session\AccountInterface;
 /**
  * Defines an access controller for the robot entity.
  *
- * We set this class to be the access controller in Robot's entity annotation.
+ * We set this class to be the access controller in RatingFormula's entity annotation.
  *
- * @see \Drupal\rating_system\Entity\Robot
+ * @see \Drupal\rating_system\Entity\RatingFormula
  *
  * @ingroup rating_system
  */
@@ -26,7 +26,7 @@ class RatingFormulaAccessController extends EntityAccessControlHandler {
    * {@inheritdoc}
    */
   public function checkAccess(EntityInterface $entity, $operation, $langcode, AccountInterface $account) {
-    return TRUE;
+    return parent::checkAccess($entity, $operation, $langcode, $account);
   }
 
 }

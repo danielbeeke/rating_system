@@ -1,0 +1,19 @@
+# Documentation for schema files like this one is located here:
+# https://drupal.org/node/1905070
+
+rating_system.rating_formula.*:
+  type: mapping
+  label: 'Rating formula'
+  mapping:
+    id:
+      type: string
+      label: 'Rating formula id'
+    uuid:
+      type: string
+      label: 'UUID'
+    label:
+      type: label
+      label: 'Label'
+    formula:
+      type: string
+      label: 'Formula'

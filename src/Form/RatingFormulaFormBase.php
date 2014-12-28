@@ -86,26 +86,26 @@ class RatingFormulaFormBase extends EntityForm {
     // variables. If this is a new entity, it will be a new object with the
     // class of our entity. Drupal knows which class to call from the
     // annotation on our Robot class.
-    $robot = $this->entity;
+    $rating_formula = $this->entity;
 
     // Build the form.
     $form['label'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('Label'),
       '#maxlength' => 255,
-      '#default_value' => $robot->label(),
+      '#default_value' => $rating_formula->label(),
       '#required' => TRUE,
     );
     $form['id'] = array(
       '#type' => 'machine_name',
       '#title' => $this->t('Machine name'),
-      '#default_value' => $robot->id(),
+      '#default_value' => $rating_formula->id(),
       '#machine_name' => array(
         'exists' => array($this, 'exists'),
         'replace_pattern' => '([^a-z0-9_]+)|(^custom$)',
         'error' => 'The machine-readable name must be unique, and can only contain lowercase letters, numbers, and underscores. Additionally, it can not be the reserved word "custom".',
       ),
-      '#disabled' => !$robot->isNew(),
+      '#disabled' => !$rating_formula->isNew(),
     );
 
     // Return the form.
@@ -190,33 +190,33 @@ class RatingFormulaFormBase extends EntityForm {
    */
   public function save(array $form, FormStateInterface $form_state) {
     // EntityForm provides us with the entity we're working on.
-    $robot = $this->getEntity();
+    $rating_formula = $this->getEntity();
 
     // Drupal already populated the form values in the entity object. Each
     // form field was saved as a public variable in the entity class. PHP
     // allows Drupal to do this even if the method is not defined ahead of
     // time.
-    $status = $robot->save();
+    $status = $rating_formula->save();
 
     // Grab the URL of the new entity. We'll use it in the message.
-    $url = $robot->urlInfo();
+    $url = $rating_formula->urlInfo();
 
     // Create an edit link.
     $edit_link = $this->l(t('Edit'), $url);
 
     if ($status == SAVED_UPDATED) {
       // If we edited an existing entity...
-      drupal_set_message($this->t('Robot %label has been updated.', array('%label' => $robot->label())));
-      $this->logger('contact')->notice('Robot %label has been updated.', ['%label' => $robot->label(), 'link' => $edit_link]);
+      drupal_set_message($this->t('Rating formula %label has been updated.', array('%label' => $rating_formula->label())));
+      $this->logger('contact')->notice('Rating formula %label has been updated.', ['%label' => $rating_formula->label(), 'link' => $edit_link]);
     }
     else {
       // If we created a new entity...
-      drupal_set_message($this->t('Robot %label has been added.', array('%label' => $robot->label())));
-      $this->logger('contact')->notice('Robot %label has been added.', ['%label' => $robot->label(), 'link' => $edit_link]);
+      drupal_set_message($this->t('Rating formula %label has been added.', array('%label' => $rating_formula->label())));
+      $this->logger('contact')->notice('Rating formula %label has been added.', ['%label' => $rating_formula->label(), 'link' => $edit_link]);
     }
 
     // Redirect the user back to the listing route after the save operation.
-    $form_state->setRedirect('robot.list');
+    $form_state->setRedirect('rating_system.rating_formula_list');
   }
 
 }

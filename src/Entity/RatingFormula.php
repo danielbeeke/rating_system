@@ -62,8 +62,8 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "label" = "label"
  *   },
  *   links = {
- *     "edit-form" = "rating_formula.edit",
- *     "delete-form" = "rating_formula.delete"
+ *     "edit-form" = "rating_system.rating_formula_edit",
+ *     "delete-form" = "rating_system.rating_formula_delete"
  *   }
  * )
  */
