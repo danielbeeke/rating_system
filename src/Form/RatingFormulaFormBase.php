@@ -2,18 +2,19 @@
 
 /**
  * @file
- * Contains Drupal\rating_system\Form\RobotFormBase.
+ * Contains Drupal\rating_system\Form\RatingFormulaFormBase.
  */
 
 namespace Drupal\rating_system\Form;
 
+use Drupal\rating_system\Rpn\RatingFormulaRpn;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Entity\Query\QueryFactory;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class RobotFormBase.
+ * Class RatingFormulaFormBase.
  *
  * Typically, we need to build the same form for both adding a new entity,
  * and editing an existing entity. Instead of duplicating our form code,
@@ -32,7 +33,7 @@ class RatingFormulaFormBase extends EntityForm {
   protected $entityQueryFactory;
 
   /**
-   * Construct the RobotFormBase.
+   * Construct the RatingFormulaFormBase.
    *
    * For simple entity forms, there's no need for a constructor. Our robot form
    * base, however, requires an entity query factory to be injected into it
@@ -47,7 +48,7 @@ class RatingFormulaFormBase extends EntityForm {
   }
 
   /**
-   * Factory method for RobotFormBase.
+   * Factory method for RatingFormulaFormBase.
    *
    * When Drupal builds this class it does not call the constructor directly.
    * Instead, it relies on this method to build the new object. Why? The class
@@ -96,6 +97,7 @@ class RatingFormulaFormBase extends EntityForm {
       '#default_value' => $rating_formula->label(),
       '#required' => TRUE,
     );
+
     $form['id'] = array(
       '#type' => 'machine_name',
       '#title' => $this->t('Machine name'),
@@ -106,6 +108,13 @@ class RatingFormulaFormBase extends EntityForm {
         'error' => 'The machine-readable name must be unique, and can only contain lowercase letters, numbers, and underscores. Additionally, it can not be the reserved word "custom".',
       ),
       '#disabled' => !$rating_formula->isNew(),
+    );
+
+    $form['formula'] = array(
+      '#required' => TRUE,
+      '#type' => 'textfield',
+      '#title' => $this->t('Formula'),
+      '#default_value' => $rating_formula->formula(),
     );
 
     // Return the form.
@@ -173,7 +182,14 @@ class RatingFormulaFormBase extends EntityForm {
     parent::validate($form, $form_state);
 
     // Add code here to validate your config entity's form elements.
-    // Nothing to do here.
+    $rpn = new RatingFormulaRpn();
+
+    // Small workaround if the current formula is simple just a number.
+    $formule_result = $rpn->evaluate('0 + (' . $form_state->getValue('formula') . ')');
+
+    if (!is_numeric($formule_result)) {
+      $form_state->setErrorByName('formula', $formule_result);
+    }
   }
 
   /**

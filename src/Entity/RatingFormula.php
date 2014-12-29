@@ -96,4 +96,8 @@ class RatingFormula extends ConfigEntityBase {
    * @var string
    */
   public $formula;
+
+  public function formula () {
+    return $this->formula;
+  }
 }
