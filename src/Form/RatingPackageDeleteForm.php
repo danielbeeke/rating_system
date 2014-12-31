@@ -24,7 +24,7 @@ use Drupal\Core\Form\FormStateInterface;
  *
  * @ingroup rating_system
  */
-class RatingFormulaDeleteForm extends EntityConfirmFormBase {
+class RatingPackageDeleteForm extends EntityConfirmFormBase {
 
   /**
    * Gathers a confirmation question.
@@ -37,7 +37,7 @@ class RatingFormulaDeleteForm extends EntityConfirmFormBase {
    *   Translated string.
    */
   public function getQuestion() {
-    return $this->t('Are you sure you want to delete formula %label?', array(
+    return $this->t('Are you sure you want to delete package %label?', array(
         '%label' => $this->entity->label(),
     ));
   }
@@ -52,7 +52,7 @@ class RatingFormulaDeleteForm extends EntityConfirmFormBase {
    *   Translated string.
    */
   public function getConfirmText() {
-    return $this->t('Delete formula');
+    return $this->t('Delete package');
   }
 
   /**
@@ -66,7 +66,7 @@ class RatingFormulaDeleteForm extends EntityConfirmFormBase {
    *   The URL to go to if the user cancels the deletion.
    */
   public function getCancelUrl() {
-    return new Url('rating_system.formula_list');
+    return new Url('rating_system.package_list');
   }
 
   /**
@@ -85,7 +85,7 @@ class RatingFormulaDeleteForm extends EntityConfirmFormBase {
     $this->entity->delete();
 
     // Set a message that the entity was deleted.
-    drupal_set_message(t('Formula %label was deleted.', array(
+    drupal_set_message(t('Package %label was deleted.', array(
       '%label' => $this->entity->label(),
     )));
 

@@ -35,7 +35,7 @@ class RatingFormulaAddForm extends RatingFormulaFormBase {
    */
   protected function actions(array $form, FormStateInterface $form_state) {
     $actions = parent::actions($form, $form_state);
-    $actions['submit']['#value'] = $this->t('Create rating formula');
+    $actions['submit']['#value'] = $this->t('Create formula');
     return $actions;
   }
 

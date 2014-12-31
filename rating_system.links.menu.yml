@@ -1,11 +1,17 @@
-rating_system.rating_system:
+rating_system.overview:
   title: Rating system
-  route_name: rating_system.rating_system
+  route_name: rating_system.overview
   parent: system.admin_structure
+  description: 'Administer formulas.'
+
+rating_system.formula_list:
+  title: Formulas
+  route_name: rating_system.formula_list
+  parent: rating_system.overview
   description: 'Administer rating formulas.'
 
-rating_system.rating_formula_list:
-  title: Rating formula's
-  route_name: rating_system.rating_formula_list
-  parent: rating_system.rating_system
-  description: 'Administer rating formulas.'
+rating_system.package_list:
+  title: Packages
+  route_name: rating_system.package_list
+  parent: rating_system.overview
+  description: 'Administer packages.'

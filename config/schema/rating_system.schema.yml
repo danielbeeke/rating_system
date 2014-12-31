@@ -1,13 +1,13 @@
 # Documentation for schema files like this one is located here:
 # https://drupal.org/node/1905070
 
-rating_system.rating_formula.*:
+rating_system.rs_formula.*:
   type: mapping
-  label: 'Rating formula'
+  label: 'Formula'
   mapping:
     id:
       type: string
-      label: 'Rating formula id'
+      label: 'Formula id'
     uuid:
       type: string
       label: 'UUID'
@@ -17,3 +17,23 @@ rating_system.rating_formula.*:
     formula:
       type: string
       label: 'Formula'
+    entity_type:
+      type: string
+      label: 'Entity type'
+    entity_bundle:
+      type: string
+      label: 'Entity bundle'
+
+rating_system.rs_package.*:
+  type: mapping
+  label: 'Package'
+  mapping:
+    id:
+      type: string
+      label: 'Package id'
+    uuid:
+      type: string
+      label: 'UUID'
+    label:
+      type: label
+      label: 'Label'

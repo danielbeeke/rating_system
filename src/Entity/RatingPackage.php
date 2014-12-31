@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains Drupal\rating_system\Entity\RatingFormula.
+ * Contains Drupal\rating_system\Entity\RatingPackage.
  *
  * This contains our entity class.
  *
@@ -15,7 +15,7 @@ namespace Drupal\rating_system\Entity;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 
 /**
- * Defines the RatingFormula entity.
+ * Defines the RatingPackage entity.
  *
  * The lines below, starting with '@ConfigEntityType,' are a plugin annotation.
  * These define the entity type to the entity type manager.
@@ -45,16 +45,16 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  * @ingroup rating_system
  *
  * @ConfigEntityType(
- *   id = "rs_formula",
- *   label = @Translation("formula"),
+ *   id = "rs_package",
+ *   label = @Translation("package"),
  *   admin_permission = "administer rating system",
  *   handlers = {
- *     "access" = "Drupal\rating_system\RatingFormulaAccessController",
- *     "list_builder" = "Drupal\rating_system\Controller\RatingFormulaListBuilder",
+ *     "access" = "Drupal\rating_system\RatingPackageAccessController",
+ *     "list_builder" = "Drupal\rating_system\Controller\RatingPackageListBuilder",
  *     "form" = {
- *       "add" = "Drupal\rating_system\Form\RatingFormulaAddForm",
- *       "edit" = "Drupal\rating_system\Form\RatingFormulaEditForm",
- *       "delete" = "Drupal\rating_system\Form\RatingFormulaDeleteForm"
+ *       "add" = "Drupal\rating_system\Form\RatingPackageAddForm",
+ *       "edit" = "Drupal\rating_system\Form\RatingPackageEditForm",
+ *       "delete" = "Drupal\rating_system\Form\RatingPackageDeleteForm"
  *     }
  *   },
  *   entity_keys = {
@@ -62,57 +62,32 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "label" = "label"
  *   },
  *   links = {
- *     "edit-form" = "rating_system.formula_edit",
- *     "delete-form" = "rating_system.formula_delete"
+ *     "edit-form" = "rating_system.package_edit",
+ *     "delete-form" = "rating_system.package_delete"
  *   }
  * )
  */
-class RatingFormula extends ConfigEntityBase {
+class RatingPackage extends ConfigEntityBase {
 
   /**
-   * The RatingFormula ID.
+   * The RatingPackage ID.
    *
    * @var string
    */
   public $id;
 
   /**
-   * The RatingFormula UUID.
+   * The RatingPackage UUID.
    *
    * @var string
    */
   public $uuid;
 
   /**
-   * The RatingFormula label.
+   * The RatingPackage label.
    *
    * @var string
    */
   public $label;
 
-  /**
-   * The formula.
-   *
-   * @var string
-   */
-  public $formula;
-
-  /**
-   * The package.
-   *
-   * @var string
-   */
-  public $package;
-
-  public function formulas() {
-    return json_decode($this->formula, TRUE);
-  }
-
-  public function entity_type() {
-    return $this->entity_type;
-  }
-
-  public function entity_bundle() {
-    return $this->entity_bundle;
-  }
 }

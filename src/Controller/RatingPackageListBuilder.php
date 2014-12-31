@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Contains Drupal\rating_system\Controller\RatingFormulaListBuilder.
+ * Contains Drupal\rating_system\Controller\RatingPackageListBuilder.
  */
 
 namespace Drupal\rating_system\Controller;
@@ -10,13 +10,13 @@ use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
 
 /**
- * Provides a listing of rating formula entities.
+ * Provides a listing of rating package entities.
  *
  * @package Drupal\rating_system\Controller
  *
  * @ingroup rating_system
  */
-class RatingFormulaListBuilder extends ConfigEntityListBuilder {
+class RatingPackageListBuilder extends ConfigEntityListBuilder {
 
   /**
    * Builds the header row for the entity listing.
@@ -27,7 +27,7 @@ class RatingFormulaListBuilder extends ConfigEntityListBuilder {
    * @see Drupal\Core\Entity\EntityListController::render()
    */
   public function buildHeader() {
-    $header['label'] = $this->t('Formula');
+    $header['label'] = $this->t('Package');
     $header['machine_name'] = $this->t('Machine Name');
     return $header + parent::buildHeader();
   }

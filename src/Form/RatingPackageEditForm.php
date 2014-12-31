@@ -18,7 +18,7 @@ use Drupal\Core\Form\FormStateInterface;
  *
  * @ingroup rating_system
  */
-class RatingFormulaEditForm extends RatingFormulaFormBase {
+class RatingPackageEditForm extends RatingPackageFormBase {
 
   /**
    * Returns the actions provided by this form.
@@ -35,7 +35,7 @@ class RatingFormulaEditForm extends RatingFormulaFormBase {
    */
   public function actions(array $form, FormStateInterface $form_state) {
     $actions = parent::actions($form, $form_state);
-    $actions['submit']['#value'] = t('Update formula');
+    $actions['submit']['#value'] = t('Update package');
     return $actions;
   }
 

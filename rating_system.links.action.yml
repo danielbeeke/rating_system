@@ -1,5 +1,11 @@
-rating_system.rating_formula_add:
-  route_name: rating_system.rating_formula_add
+rating_system.formula_add:
+  route_name: rating_system.formula_add
   title: 'Add formula'
   appears_on:
-    - rating_system.rating_formula_list
+    - rating_system.formula_list
+
+rating_system.package_add:
+  route_name: rating_system.package_add
+  title: 'Add package'
+  appears_on:
+    - rating_system.package_list

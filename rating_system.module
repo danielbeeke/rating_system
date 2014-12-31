@@ -1,0 +1,16 @@
+<?php
+
+use Drupal\rating_system\Controller\EntityScoreController;
+
+/**
+ * Implements hook_entity_storage_load().
+ */
+function rating_system_entity_storage_load(array $entities, $entity_type_id) {
+  foreach ($entities as $entity) {
+    $entityScoreController = new EntityScoreController($entity);
+
+    if ($scores = $entityScoreController->getScores()) {
+      $entity->rating_system = $scores;
+    }
+  }
+}
