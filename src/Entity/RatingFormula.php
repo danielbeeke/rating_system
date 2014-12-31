@@ -109,10 +109,10 @@ class RatingFormula extends ConfigEntityBase {
   }
 
   public function entity_type() {
-    return $this->entity_type;
+    return isset($this->entity_type) ? $this->entity_type : NULL;
   }
 
   public function entity_bundle() {
-    return $this->entity_bundle;
+    return isset($this->entity_bundle) ? $this->entity_bundle : NULL;
   }
 }

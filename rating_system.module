@@ -11,6 +11,8 @@ function rating_system_entity_storage_load(array $entities, $entity_type_id) {
 
     if ($scores = $entityScoreController->getScores()) {
       $entity->rating_system = $scores;
+
+      // kint($scores);
     }
   }
 }

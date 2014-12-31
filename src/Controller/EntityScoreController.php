@@ -25,6 +25,7 @@ class EntityScoreController {
   }
 
   protected function getBundlesWithFormulas () {
+    $types = array();
     $formulas = entity_load_multiple('rs_formula');
 
     foreach ($formulas as $formula) {
@@ -42,7 +43,8 @@ class EntityScoreController {
 
     // Only for entities that have a formula.
     $bundles_with_formulas = $this->getBundlesWithFormulas();
-    if(!in_array($this->entity->bundle(), $bundles_with_formulas[$entity_type])) { return; }
+    if(!isset($bundles_with_formulas[$entity_type]) ||
+      !in_array($this->entity->bundle(), $bundles_with_formulas[$entity_type])) { return; }
 
     return TRUE;
   }
@@ -54,31 +56,80 @@ class EntityScoreController {
     $entity_type = $this->entity->getEntityTypeId();
     $entity_bundle = $this->entity->bundle();
 
-    foreach ($formulas as $formula) {
-      if ($formula->entity_type() == $entity_type && $formula->entity_bundle() == $entity_bundle) {
-        $active_formulas[] = $formula;
+    if (isset($formulas)) {
+      foreach ($formulas as $formula) {
+        if ($formula->entity_type() == $entity_type && $formula->entity_bundle() == $entity_bundle) {
+          $active_formulas[] = $formula;
+        }
       }
     }
 
     return $active_formulas;
   }
 
+  protected function fetchScore($formula, $package_id) {
+    $score = db_select('rating_score', 'rs')
+    ->condition('entity_type', $formula->entity_type())
+    ->condition('entity_id', $this->entity->id())
+    ->condition('rating_formula_id', $formula->id())
+    ->fields('rs', array('score'))
+    ->execute()
+    ->fetchField();
+
+    return $score;
+  }
+
+  protected function calculateScore($math_formula) {
+    $rpn = new RatingFormulaRpn();
+    $formula_result = $rpn->evaluate('0 + (' . $math_formula . ')');
+
+    if(is_numeric($formula_result)) {
+      return $formula_result;
+    }
+  }
+
+  protected function writeScore($formula, $score, $package_id) {
+    \Drupal::database()->merge('rating_score')
+    ->key(array(
+        'rating_formula_id' => $formula->id(),
+        'entity_id' => $this->entity->id(),
+        'package_id' => $package_id,
+        'entity_type' => $formula->entity_type()
+    ))
+    ->fields(array(
+        'score' => $score,
+        'timestamp' => REQUEST_TIME,
+    ))
+    ->execute();
+  }
+
   public function getScores() {
     // Only give scores to entities that have formules for them.
     if (!$this->entityNeedsScores()) { return; }
 
+    // Get the right formulas.
     $formulas = $this->getActiveFormulasForEntity();
     $scores = array();
 
-    foreach ($formulas as $formula) {
-      $math_formulas = $formula->formulas();
+    // Split up to the deepest niveau: entity-formula-package specific.
+    if (isset($formulas)) {
+      foreach ($formulas as $formula) {
+        $math_formulas = $formula->formulas();
 
-      foreach ($math_formulas as $package_key => $math_formula) {
-        $rpn = new RatingFormulaRpn();
-        $formula_result = $rpn->evaluate('0 + (' . $math_formula . ')');
+        foreach ($math_formulas as $package_id => $math_formula) {
+          // Try database.
+          $database_score = $this->fetchScore($formula, $package_id);
 
-        if(is_numeric($formula_result)) {
-          $scores[$formula->id()][$package_key] = $formula_result;
+          if ($database_score === FALSE) {
+            // Calculate score and write it to database.
+            $calculated_score = $this->calculateScore($math_formula);
+            $this->writeScore($formula, $calculated_score, $package_id);
+
+            $scores[$formula->id()][$package_id] = $calculated_score;
+          }
+          else {
+            $scores[$formula->id()][$package_id] = $database_score;
+          }
         }
       }
     }

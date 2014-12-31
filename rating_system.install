@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function rating_system_schema() {
+  $schema['rating_score'] = array(
+    'description' => 'The base table for rating scores.',
+    'fields' => array(
+      'rating_formula_id' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => "The system name of the package this rating group is attached to.",
+      ),
+      'timestamp' => array(
+        'description' => 'The Unix timestamp when the rating_score was calculated.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'score' => array(
+        'description' => 'The score.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'package_id' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => "The system name of the package this rating group is attached to.",
+      ),
+      'entity_type' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => "The system name of the entity this rating group is attached to.",
+      ),
+      'entity_id' => array(
+        'description' => 'The entity id for which this score is.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'indexes' => array(
+      'rating_score_entity_id' => array('entity_id'),
+    ),
+    'unique keys' => array(
+      'rating_formula_id_entity_id_entity_type_package_id' => array(
+        'rating_formula_id',
+        'entity_id',
+        'entity_type',
+        'package_id'
+      ),
+    ),
+  );
+
+  return $schema;
+}
